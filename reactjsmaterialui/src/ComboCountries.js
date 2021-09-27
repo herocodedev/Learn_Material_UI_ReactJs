@@ -9,20 +9,22 @@ class ComboCountries extends React.Component {
     super(props);
     const columns = [
       { field: "Country", headerName: "Country", width: 150 },
-      { field: "Slug", headerName: "Slug", width: 150 },
-      { field: "ISO2", headerName: "ISO2", width: 150 },
+      { field: "NewConfirmed", headerName: "NewConfirmed", width: 150 },
+      { field: "TotalConfirmed", headerName: "TotalConfirmed", width: 150 },
     ];
     this.state = { rows: [], columns: columns, selectedCountry: "" };
   }
 
   getData = () => {
-    fetch("https://api.covid19api.com/countries")
+    fetch("https://api.covid19api.com/summary")
       .then((res) => res.json())
       .then((data) => {
-        const dataNew = data.map((child, index) => {
+        console.log(data)
+        const dataNew = data.Countries.map((child, index) => {
           return Object.assign(child, { id: index++ });
         });
         this.setState({ rows: dataNew });
+        this.props.totalCountries(dataNew.length)
       })
       .catch((err) => console.log(err));
   };
@@ -32,15 +34,16 @@ class ComboCountries extends React.Component {
   }
 
   handleChange = (e) => {
-      console.log("Chọn: ",e.target.value)
+      console.log("Combobox Chọn: ",e.target.value)
       this.setState({selectedCountry:e.target.value})
+      this.props.handleChange(e.target.value)
   }
 
   render() {
     return (
       <div>
         <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-          <InputLabel id="demo-simple-select-filled-label" style={{color:"pink"}}>Age</InputLabel>
+          <InputLabel id="demo-simple-select-filled-label" style={{color:"pink"}}>Country</InputLabel>
           <Select
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"

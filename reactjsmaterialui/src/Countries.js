@@ -11,18 +11,18 @@ class Countries extends React.Component{
     //   { id: 3, col1: 'Material-UI', col2: 'is Amazing' },
     // ];
     const columns= [
-      { field: 'Country', headerName: 'Country', width: 150 },
-      { field: 'Slug', headerName: 'Slug', width: 150 },
-      { field: 'ISO2', headerName: 'ISO2', width: 150 },
+      { field: "Country", headerName: "Country", width: 150 },
+      { field: "NewConfirmed", headerName: "NewConfirmed", width: 150 },
+      { field: "TotalConfirmed", headerName: "TotalConfirmed", width: 150 },
     ];
     this.state = {rows:[],columns:columns}
   }
 
   getData = () => {
-    fetch('https://api.covid19api.com/countries')
+    fetch('https://api.covid19api.com/summary')
     .then(res => res.json())
     .then((data) => {
-      const dataNew = data.map((child,index) => {
+      const dataNew = data.Countries.map((child,index) => {
         return Object.assign(child,{id:index++})
       })
       this.setState({rows:dataNew})
