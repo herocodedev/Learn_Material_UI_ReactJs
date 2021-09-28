@@ -58,7 +58,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function MyAppbar() {
+export default function MyAppbar({handleChangeCountry}) {
   const [countries,setCountries] = React.useState(0)
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -85,11 +85,12 @@ export default function MyAppbar() {
 
   const handleChange = (country) => {
     console.log("MyAppbar chọn : ",country)
+    handleChangeCountry(country)
   }
 
   const totalCountry = (total) => {
     setCountries(total)
-    console.log("Tổng số nước: ",total)
+    // console.log("Tổng số nước: ",total)
   }
 
   const menuId = "primary-search-account-menu";

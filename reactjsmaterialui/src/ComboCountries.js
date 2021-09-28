@@ -22,6 +22,7 @@ class ComboCountries extends React.Component {
         const dataNew = data.Countries.map((child, index) => {
           return Object.assign(child, { id: index++ });
         });
+        dataNew.sort()
         this.setState({ rows: dataNew });
         this.props.totalCountry(dataNew.length)
       })
