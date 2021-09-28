@@ -16,13 +16,14 @@ class ComboCountries extends React.Component {
   }
 
   getData = () => {
-    fetch("https://api.covid19api.com/countries")
+    fetch("https://api.covid19api.com/summary")
       .then((res) => res.json())
       .then((data) => {
-        const dataNew = data.map((child, index) => {
+        const dataNew = data.Countries.map((child, index) => {
           return Object.assign(child, { id: index++ });
         });
         this.setState({ rows: dataNew });
+        this.props.totalCountry(dataNew.length)
       })
       .catch((err) => console.log(err));
   };
@@ -32,15 +33,17 @@ class ComboCountries extends React.Component {
   }
 
   handleChange = (e) => {
-      console.log("Chọn: ",e.target.value)
+      console.log("CompoCountries chọn: ",e.target.value)
       this.setState({selectedCountry:e.target.value})
+      this.props.handleChange(e.target.value)
   }
+  
 
   render() {
     return (
       <div>
         <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-          <InputLabel id="demo-simple-select-filled-label" style={{color:"pink"}}>Age</InputLabel>
+          <InputLabel id="demo-simple-select-filled-label" style={{color:"pink"}}>Country</InputLabel>
           <Select
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"

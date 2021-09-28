@@ -1,16 +1,17 @@
 import "./App.css";
 import react from "react";
-import MyAppbar from "./MyAppbar"
+import MyAppbar from "./MyAppbar";
 import Countries from "./Countries";
 
 class App extends react.Component {
   render() {
     return (
-    <div>
-      <MyAppbar />
-      <br />
-      <Countries />
-    </div>);
+      <div>
+        <MyAppbar />
+        <br />
+        <Countries />
+      </div>
+    );
   }
 }
 

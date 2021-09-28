@@ -59,6 +59,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function MyAppbar() {
+  const [countries,setCountries] = React.useState(0)
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -81,6 +82,15 @@ export default function MyAppbar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const handleChange = (country) => {
+    console.log("MyAppbar chọn : ",country)
+  }
+
+  const totalCountry = (total) => {
+    setCountries(total)
+    console.log("Tổng số nước: ",total)
+  }
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -188,42 +198,15 @@ export default function MyAppbar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <ComboCountries />
-            {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton> */}
-            {/* <IconButton
+            <ComboCountries handleChange = {handleChange} totalCountry = {totalCountry}/>
+            <IconButton
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
             >
-              <Badge badgeContent={18} color="error">
-                <NotificationsIcon />
+              <Badge badgeContent={countries} color="error">
+                <EmojiFlagsIcon />
               </Badge>
-            </IconButton> */}
-            {/* <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton> */}
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <EmojiFlagsIcon />
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
