@@ -1,5 +1,7 @@
 import { DataGrid } from '@mui/x-data-grid';
 import React from 'react';
+// import Moment from 'react-moment';
+import moment from 'moment';
 
 
 class Countries extends React.Component{
@@ -11,11 +13,14 @@ class Countries extends React.Component{
     //   { id: 3, col1: 'Material-UI', col2: 'is Amazing' },
     // ];
     const columns= [
-      { field: "Country", headerName: "Country", width: 150 },
-      { field: "NewConfirmed", headerName: "NewConfirmed", width: 150 },
-      { field: "TotalConfirmed", headerName: "TotalConfirmed", width: 150 },
+      { field: "Country", headerName: "Đất Nước", width: 150 },
+      { field: "NewConfirmed", headerName: "Số Ca Mắc Mới", width: 200 },
+      { field: "TotalConfirmed", headerName: "Tổng Số Ca Đã Mắc", width: 200 },
+      { field: "TotalDeaths", headerName: "Số Người died", width: 150 },
+      { field: "formatDate", headerName: "Thời Gian", width: 200 },
+
     ];
-    this.state = {rows:[],columns:columns}
+    this.state = {rows:[],columns:columns,selectedCountry:props.selectedCountry,displayData:[]}
   }
 
   getData = () => {
@@ -23,11 +28,20 @@ class Countries extends React.Component{
     .then(res => res.json())
     .then((data) => {
       const dataNew = data.Countries.map((child,index) => {
-        return Object.assign(child,{id:index++})
+        return Object.assign(child,{id:index++},{formatDate:moment().add(child.Date).format('DD/MM/YY')})
       })
-      this.setState({rows:dataNew})
+      const displayData = [...dataNew]
+      console.log(displayData)
+      this.setState({rows:dataNew,displayData:displayData})
     })
     .catch(err => console.log(err))
+  }
+
+  static getDerivedStateFromProps(props,state){
+    const displayData = state.rows.filter((val) => {
+      return val.Country === props.selectedCountry || props.selectedCountry === ' '
+    })
+    return {displayData:displayData}
   }
 
   componentDidMount(){
@@ -37,7 +51,7 @@ class Countries extends React.Component{
   render(){
     return (
       <div style={{ height: 300, width: '100%' }}>
-      <DataGrid rows={this.state.rows} columns={this.state.columns} />
+      <DataGrid rows={this.state.displayData.length > 0 ? this.state.displayData : this.state.rows} columns={this.state.columns} />
     </div>
     )
   }

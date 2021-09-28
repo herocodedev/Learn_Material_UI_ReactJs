@@ -19,10 +19,14 @@ class ComboCountries extends React.Component {
     fetch("https://api.covid19api.com/summary")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
-        const dataNew = data.Countries.map((child, index) => {
+        // console.log(data)
+        let dataNew = data.Countries.map((child, index) => {
           return Object.assign(child, { id: index++ });
         });
+        dataNew = dataNew.sort((a,b) => {
+          return a.Country < b.Country ? -1 : 1
+        })
+        // console.log("Data sorted: ",dataNew)
         this.setState({ rows: dataNew });
         this.props.totalCountries(dataNew.length)
       })

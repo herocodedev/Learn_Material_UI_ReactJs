@@ -4,12 +4,20 @@ import MyAppbar from "./MyAppbar"
 import Countries from "./Countries";
 
 class App extends react.Component {
+  constructor(props){
+    super(props)
+    this.state = {selectedCountry:''}
+  }
+  handleCountryChange = (country) => {
+    console.log("App chọn: ",country)
+    this.setState({selectedCountry:country})
+  }
   render() {
     return (
     <div>
-      <MyAppbar />
+      <MyAppbar handleCountryChange = {this.handleCountryChange}/>
       <br />
-      <Countries />
+      <Countries selectedCountry = {this.state.selectedCountry}/>
     </div>);
   }
 }
